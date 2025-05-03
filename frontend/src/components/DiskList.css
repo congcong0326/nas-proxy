@@ -1,0 +1,138 @@
+.disk-layout {
+  display: flex;
+  gap: 2rem;
+  height: calc(100vh - 200px);
+}
+
+.disk-list-panel {
+  flex: 0 0 320px;
+  background: var(--card-bg);
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid var(--border-color);
+  overflow-y: auto;
+}
+
+.disk-card {
+  padding: 12px;
+  margin-bottom: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+}
+
+.disk-card.selected {
+  border-color: #1890ff;
+  background: var(--primary-bg-hover);
+}
+
+.temperature-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.temperature-bar {
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  border-radius: 2px;
+  box-shadow: inset 0 2px 4px rgba(58,184,255,0.3);
+}
+
+.status-tag {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.status-tag.ok {
+  background: rgba(76,175,80,0.15);
+  color: var(--success-color);
+  border: 1px solid rgba(76,175,80,0.3);
+}
+
+.status-tag.warning {
+  background: rgba(255,160,0,0.1);
+  color: var(--warning-color);
+  border: 1px solid rgba(255,160,0,0.3);
+}
+.status-tag.error {
+  background: rgba(211,47,47,0.1);
+  color: var(--error-color);
+  border: 1px solid rgba(211,47,47,0.3);
+}
+
+.disk-detail-panel {
+  flex: 1;
+  background: var(--card-bg);
+  border-radius: 8px;
+  padding: 24px;
+  border: 1px solid var(--border-color);
+}
+
+.basic-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.info-item {
+  background: var(--card-bg);
+}
+
+.info-item label {
+  color: var(--secondary-text);
+}
+
+.health-status.passed {
+  background: var(--success-color);
+}
+
+.smart-table th {
+  background: var(--card-bg);
+}
+
+.panel-header {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.refresh-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.chart-container {
+  padding: 16px;
+  margin-top: 24px;
+  background: var(--card-bg);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.chart-container h4 {
+  color: var(--text-color);
+  margin-bottom: 16px;
+  font-size: 16px;
+}
+
+.recharts-cartesian-axis-tick text {
+  fill: var(--secondary-text);
+  font-size: 12px;
+}
+
+.recharts-tooltip {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: var(--card-shadow) !important;
+  border-radius: 6px !important;
+}
+
+.recharts-default-tooltip p {
+  color: var(--text-color) !important;
+}

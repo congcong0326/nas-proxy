@@ -1,0 +1,70 @@
+{
+  "inbounds": [
+    {
+      "tag": "socks",
+      "enable": false,
+      "port": 36172,
+      "listen": "0.0.0.0",
+      "protocol": "socks",
+      "settings": {
+        "password": "C8eq8jx1"
+      },
+      "user": "cmg"
+    },
+    {
+      "tag": "http",
+      "enable": false,
+      "port": 36171,
+      "listen": "0.0.0.0",
+      "protocol": "http",
+      "settings": {
+
+      },
+      "user": "cmg"
+    },
+    {
+      "tag": "shadow_socks",
+      "enable": true,
+      "port": 36170,
+      "listen": "0.0.0.0",
+      "protocol": "shadow_socks",
+      "settings": {
+        "method": "chacha20_poly1305",
+        "password": "user_1_password"
+      },
+      "user": "user_1"
+    },
+    {
+      "tag": "shadow_socks",
+      "enable": true,
+      "port": 36198,
+      "listen": "0.0.0.0",
+      "protocol": "shadow_socks",
+      "settings": {
+        "method": "chacha20_poly1305",
+        "password": "user_1_password"
+      },
+      "user": "user_2"
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "direct",
+      "port": 36196,
+      "protocol": "direct",
+      "settings": {
+        "targetAddress": "127.0.0.1",
+        "domain": "s-s-admin.cn"
+      }
+    },
+    {
+      "tag": "socks",
+      "port": 10808,
+      "protocol": "socks",
+      "settings": {
+        "targetAddress": "127.0.0.1",
+        "domain": "geosite:!china"
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "wolConfig": [
+    {
+      "name": "cc1",
+      "ipAddress": "192.168.10.21",
+      "subNetMask": "255.255.255.255",
+      "macAddress": "D8-BB-C1-D4-58-CF",
+      "wolPort": 9
+    }
+  ]
+}

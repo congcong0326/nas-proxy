@@ -1,0 +1,35 @@
+<configuration>
+    <!-- 控制台日志输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 文件日志输出并设置文件滚动 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 设置日志文件名 -->
+        <file>app.log</file>
+
+        <!-- 设置文件滚动策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <FileNamePattern>app.%i.log</FileNamePattern> <!-- 滚动后的文件名格式 -->
+            <MinIndex>1</MinIndex>  <!-- 保留的最小文件索引 -->
+            <MaxIndex>1</MaxIndex> <!-- 最大的文件索引数 -->
+        </rollingPolicy>
+
+        <!-- 设置触发日志滚动的条件 -->
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>30MB</MaxFileSize> <!-- 设置日志文件最大大小为30MB -->
+        </triggeringPolicy>
+
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" /> <!-- 引用文件 appender -->
+    </root>
+</configuration>
