@@ -102,7 +102,7 @@ config.json配置文件包含两个核心部分：
   }
 }
 ```
-该配置为默认配置，表示将s-s-admin.cn域名的请求转发到127.0.0.1的36196端口。
+该配置为默认配置，表示将s-s-admin.cn域名的请求转发到127.0.0.1的36196端口（通过该方式，即使没有购买域名也可以使用一些自定义的域名）。如果需要添加其他映射，需要注意避免使用热门域名使得浏览器证书检测失败。
 * **protocol**: `direct` 表示不经过任何代理，直接连接目标。
 * **targetAddress**: 转发目标地址。
 * **domain**: 可能用于路由匹配条件或记录。
@@ -167,12 +167,12 @@ udp包发送的广播地址，通常都为`255.255.255.255` （本地网络的�
 前提条件
 - Java 17
 - 部署再linux的宿主机上
-- 安全硬盘健康检测工具：apt install smartmontools
+- 安装硬盘健康检测工具：apt install smartmontools
 - 配置好相关配置
 下载解压压缩包，通过`chmod 777 proxy.sh`赋予启动脚本权限，`./proxy.sh start` 开启服务，`./proxy.sh stop` 关闭服务。
 
 ## 后台界面
-后台界面启动在127.0.0.1的36196端口，由于监听的127.0.0.1，所以只允许通过代理方式访问，连上代理后，通过浏览器访问：http://s-s-admin.cn/：
+后台界面启动在127.0.0.1的36196端口，由于监听的127.0.0.1，所以只允许通过代理方式访问，连上代理后，通过浏览器访问：http://s-s-admin.cn/
 ![image](https://github.com/user-attachments/assets/f51d3bc2-71b2-4046-b412-4fd19345dee8)
 ![image](https://github.com/user-attachments/assets/90569b73-2027-45e2-8013-78a25b6f4824)
 
