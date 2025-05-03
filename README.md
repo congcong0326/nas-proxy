@@ -13,9 +13,10 @@
 * 支持通过 WOL 协议远程唤醒离线设备；
 * 提供基础的监控与统计功能，覆盖硬盘健康状态、内存占用和流量信息。
 
-下图为我自己部署的一个大致架构：
+下图为我自己部署nas服务大致架构：
 
-![image](https://github.com/user-attachments/assets/8a7a57c9-1857-429f-aa15-7bb70dbe2088)
+![image](https://github.com/user-attachments/assets/c43f6351-e52a-4f50-950f-7bf506e292e5)
+
 
 ## 代理配置说明
 config.json配置文件包含两个核心部分：
