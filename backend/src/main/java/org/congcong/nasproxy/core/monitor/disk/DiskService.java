@@ -104,15 +104,36 @@ public class DiskService {
         return SmartCtlParser.parseBasicInfo(device, infoOutput, healthOutput, dataOutput);
     }
 
+
     private String executeSmartCtl(String device, String option) {
         try {
-            Process process = new ProcessBuilder("smartctl", option, "/dev/" + device).start();
-            boolean success = process.waitFor(5, TimeUnit.SECONDS);
-            return new String(process.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+            ProcessBuilder pb = new ProcessBuilder("/usr/sbin/smartctl", option, "/dev/" + device);
+            pb.redirectErrorStream(true);  // 合并 stderr
+            Process process = pb.start();
+
+            // 自动关闭 BufferedReader，避免资源泄露
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
+                StringBuilder output = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    output.append(line).append("\n");
+                }
+
+                boolean success = process.waitFor(5, TimeUnit.SECONDS);
+                if (!success || process.exitValue() != 0) {
+                    throw new RuntimeException("smartctl exited with code: " + process.exitValue()
+                            + "\nOutput:\n" + output);
+                }
+
+                return output.toString();
+            }
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException("Smartctl execution failed", e);
         }
     }
+
+
 
     private static List<String> getPhysicalDisks() {
         List<String> physicalDisks = new ArrayList<>();
