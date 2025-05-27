@@ -87,6 +87,7 @@ public class Socks5TargetAddressHandler extends ByteToMessageDecoder {
             byteBuf.resetReaderIndex();
             return;
         }
+        ctx.pipeline().addLast(new SockMessageAppender());
         ctx.pipeline().addLast(ProtocolHandlerFactory.getInstance().getHandler(socketMessage, ProtocolType.shadow_socks));
         ctx.channel().pipeline().remove(this);
         // 代理请求到本地管理端

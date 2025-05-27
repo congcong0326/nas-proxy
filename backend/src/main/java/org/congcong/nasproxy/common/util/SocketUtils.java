@@ -7,7 +7,7 @@ import io.netty.channel.ChannelFutureListener;
 public class SocketUtils {
 
     public static void close(Channel channel) {
-        if (channel.isActive()) {
+        if (channel != null && channel.isActive()) {
             channel.writeAndFlush(Unpooled.EMPTY_BUFFER).addListener(ChannelFutureListener.CLOSE);
         }
     }

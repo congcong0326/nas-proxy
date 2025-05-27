@@ -15,4 +15,8 @@ public interface Message {
     Object firstRequest();
 
     boolean keepalive();
+
+    boolean isConsume();
+
+    void setConsume();
 }

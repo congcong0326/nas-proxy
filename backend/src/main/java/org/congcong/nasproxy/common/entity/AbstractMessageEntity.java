@@ -19,7 +19,11 @@ public class AbstractMessageEntity implements Message {
 
     private int proxyServerPort;
 
+    boolean consume;
 
+    public void setConsume() {
+        consume = true;
+    }
 
     @Override
     public String getHost() {

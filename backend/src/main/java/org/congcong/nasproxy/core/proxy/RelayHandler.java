@@ -64,8 +64,14 @@ public class RelayHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        cause.printStackTrace();
-        ctx.close();
+        if (cause instanceof java.net.SocketException && cause.getMessage().contains("Connection reset")) {
+            // 记录一下即可，避免堆栈打印太多
+            log.warn("client reset: {}", ctx.channel().remoteAddress());
+        } else {
+            log.error(cause.getMessage());
+        }
+        SocketUtils.close(relayChannel);
+        SocketUtils.close(ctx.channel());
         ctx.fireExceptionCaught(cause);
     }
 

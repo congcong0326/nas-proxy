@@ -61,6 +61,7 @@ public abstract class AbstractTcpTunnelConnectorHandler<T extends Message> exten
                     // 处理其他类型的 firstRequest（如果有的话）
                     log.warn("Unsupported type for firstRequest: {}", firstRequest.getClass().getName());
                 }
+                message.setConsume();
             }
         } else {
             SocketUtils.close(outboundChannel);
