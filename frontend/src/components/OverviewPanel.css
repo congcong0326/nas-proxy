@@ -197,3 +197,21 @@ th {
     grid-template-columns: 1fr;
   }
 }
+
+/* 调整磁盘容器样式 */
+.disk-container {
+  max-height: 800px;
+  overflow: hidden;
+}
+
+/* 响应式布局调整 */
+@media (max-width: 1200px) {
+  .detail-flex-container {
+    flex-direction: column;
+  }
+  
+  .smart-table-container,
+  .chart-and-health-container {
+    width: 100%;
+  }
+}

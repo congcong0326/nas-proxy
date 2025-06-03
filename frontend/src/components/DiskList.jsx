@@ -109,49 +109,142 @@ const DiskDetails = ({ device }) => {
             {details.health}
           </span>
         </div>
+        <div className="info-item">
+          <label>磁盘类型：</label>
+          <span>{details.diskType === "HDD" ? "机械硬盘" : 
+                 details.diskType === "NVME_SSD" ? "NVME固态硬盘" : 
+                 details.diskType === "SATA_SSD" ? "SATA固态硬盘" : "未知"}</span>
+        </div>
+        <div className="info-item">
+          <label>通电次数：</label>
+          <span>{details.powerCycleCount}</span>
+        </div>
       </div>
 
-      <div className="smart-table-container">
-        <h4>SMART属性</h4>
-        <table className="smart-table">
-          <thead>
-            <tr>
-              <th>属性</th>
-              <th>当前值</th>
-              <th>阈值</th>
-              <th>状态</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>坏道</td>
-              <td>{details.reallocatedSectorCount}</td>
-              <td>0</td>
-              <td>{details.reallocatedSectorCount > 0 ? '⚠️' : '✅'}</td>
-            </tr>
-            <tr>
-              <td>寻道错误率</td>
-              <td>{details.seekErrorRate}</td>
-              <td>0</td>
-              <td>{details.seekErrorRate > 0 ? '⚠️' : '✅'}</td>
-            </tr>
-            <tr>
-              <td>旋转重试计数</td>
-              <td>{details.spinRetryCount}</td>
-              <td>0</td>
-              <td>{details.spinRetryCount > 0 ? '⚠️' : '✅'}</td>
-            </tr>
-            <tr>
-              <td>UDMA CRC 错误计数</td>
-              <td>{details.udmaCrcErrorCount}</td>
-              <td>0</td>
-              <td>{details.udmaCrcErrorCount > 0 ? '⚠️' : '✅'}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      {/* 将SMART属性表格和温度历史曲线改为并排布局 */}
+      <div className="detail-flex-container">
+        <div className="smart-table-container">
+          <h4>SMART属性</h4>
+          <table className="smart-table">
+            <thead>
+              <tr>
+                <th>属性</th>
+                <th>当前值</th>
+                <th>阈值</th>
+                <th>状态</th>
+              </tr>
+            </thead>
+            <tbody>
+              {details.diskType === "HDD" && (
+                <>
+                  <tr>
+                    <td>坏道</td>
+                    <td>{details.reallocatedSectorCount}</td>
+                    <td>0</td>
+                    <td>{details.reallocatedSectorCount > 0 ? '⚠️' : '✅'}</td>
+                  </tr>
+                  <tr>
+                    <td>寻道错误率</td>
+                    <td>{details.seekErrorRate}</td>
+                    <td>0</td>
+                    <td>{details.seekErrorRate > 0 ? '⚠️' : '✅'}</td>
+                  </tr>
+                  <tr>
+                    <td>旋转重试计数</td>
+                    <td>{details.spinRetryCount}</td>
+                    <td>0</td>
+                    <td>{details.spinRetryCount > 0 ? '⚠️' : '✅'}</td>
+                  </tr>
+                  <tr>
+                    <td>UDMA CRC 错误计数</td>
+                    <td>{details.udmaCrcErrorCount}</td>
+                    <td>0</td>
+                    <td>{details.udmaCrcErrorCount > 0 ? '⚠️' : '✅'}</td>
+                  </tr>
+                </>
+              )}
+              
+              {(details.diskType === "NVME_SSD" || details.diskType === "SATA_SSD") && (
+                <>
+                  <tr>
+                    <td>已使用寿命百分比</td>
+                    <td>{details.diskType === "SATA_SSD" ? (100 - details.ssdLifeLeft) : details.percentageUsed}%</td>
+                    <td>80%</td>
+                    <td>{(details.diskType === "SATA_SSD" ? (100 - details.ssdLifeLeft) : details.percentageUsed) > 80 ? '⚠️' : '✅'}</td>
+                  </tr>
+                  <tr>
+                    <td>写入数据总量</td>
+                    <td>{(details.dataUnitsWritten / 1024 / 1024 / 1024).toFixed(2)} TB</td>
+                    <td>-</td>
+                    <td>ℹ️</td>
+                  </tr>
+                  <tr>
+                    <td>非正常断电次数</td>
+                    <td>{details.unsafeShutdowns}</td>
+                    <td>-</td>
+                    <td>{details.unsafeShutdowns > 10 ? '⚠️' : '✅'}</td>
+                  </tr>
+                  <tr>
+                    <td>媒体错误数</td>
+                    <td>{details.mediaErrors}</td>
+                    <td>0</td>
+                    <td>{details.mediaErrors > 0 ? '⚠️' : '✅'}</td>
+                  </tr>
+                </>
+              )}
+              
+              {details.diskType === "SATA_SSD" && (
+                <>
+                  <tr>
+                    <td>剩余寿命百分比</td>
+                    <td>{details.ssdLifeLeft}%</td>
+                    <td>20%</td>
+                    <td>{details.ssdLifeLeft < 20 ? '⚠️' : '✅'}</td>
+                  </tr>
+                  <tr>
+                    <td>寿命写入总量</td>
+                    <td>{(details.lifetimeWritesGiB / 1024).toFixed(2)} TB</td>
+                    <td>-</td>
+                    <td>ℹ️</td>
+                  </tr>
+                  <tr>
+                    <td>平均擦除次数</td>
+                    <td>{details.averageEraseCount}</td>
+                    <td>-</td>
+                    <td>ℹ️</td>
+                  </tr>
+                </>
+              )}
+            </tbody>
+          </table>
+        </div>
 
-      <TemperatureChart data={details?.historyTemperature || []} />
+        <div className="chart-and-health-container">
+          <TemperatureChart data={details?.historyTemperature || []} />
+          
+          {details.diskType === "SATA_SSD" && (
+            <div className="ssd-health-indicator">
+              <h4>SSD健康状态</h4>
+              <div className="health-bar-container">
+                <div 
+                  className={`health-bar ${details.ssdLifeLeft > 80 ? 'excellent' : 
+                                          details.ssdLifeLeft > 50 ? 'good' : 
+                                          details.ssdLifeLeft > 20 ? 'fair' : 'warning'}`}
+                  style={{ width: `${details.ssdLifeLeft}%` }}
+                />
+              </div>
+              <div className="health-labels">
+                <span>{details.ssdLifeLeft}% 剩余寿命</span>
+                <span className="health-status-text">
+                  {details.ssdLifeLeft > 80 ? '优秀' : 
+                   details.ssdLifeLeft > 50 ? '良好' : 
+                   details.ssdLifeLeft > 20 ? '一般' : '警告'}
+                </span>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

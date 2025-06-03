@@ -101,7 +101,7 @@ export default function OverviewPanel({ data }) {
       </div>
 
       {/* 设备表格区 */}
-      <div className="device-table">
+      <div className="device-table disk-container">
         <DiskList />
       </div>
 
